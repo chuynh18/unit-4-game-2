@@ -1,5 +1,44 @@
+/* colors
+yellow:  #ffe81f
+blue:  #11ddfa
+red:  #f70018
+ */
+
 html {
     background-color: black;
     font-family: 'Russo One', sans-serif;
     text-align: center;
+}
+
+/* temp borders to help me as I build the game out */
+div {
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+}
+
+.charContainer {
+    display: inline-block;
+}
+
+.charImg {
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5%;
+}
+
+.lightSide {
+    border-color: #11ddfa;
+}
+
+.lightSide:hover {
+    border-color: #ffe81f;
+}
+
+.darkSide {
+    border-color: #f70018;
+}
+
+.darkSide:hover {
+    border-color: #ffe81f;
 }
