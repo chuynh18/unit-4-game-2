@@ -26,4 +26,6 @@ var createChars = function() {
 
 $(function() {
 
+    createChars();
+
 });
