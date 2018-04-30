@@ -18,15 +18,15 @@ var currentGameState = gameState[0];
 // ----------------------- functions -----------------------
 
 // creates the clickable characters based on data from a given array of objects
-var createCharSelect = function(inputArrayOfObjects) {
-    for (var i = 0; i < inputArrayOfObjects.length; i++) {
+var createCharSelect = function() {
+    for (var i = 0; i < characters.length; i++) {
         var charContainer = $("<div>");
         var charImg = $("<img>");
         charContainer.addClass("charContainer");
         charContainer.attr("id", "char"+(i+1));
-        charImg.attr("src", inputArrayOfObjects[i].src);
-        charImg.addClass(inputArrayOfObjects[i].class);
-        charImg.attr("alt", inputArrayOfObjects[i].name);
+        charImg.attr("src", characters[i].src);
+        charImg.addClass(characters[i].class);
+        charImg.attr("alt", characters[i].name);
         charImg.attr("id", i);
         $("#charSelect").append(charContainer);
         $("#charSelect > #char"+(i+1)).append(charImg);
@@ -104,13 +104,21 @@ var htmlWriter = function(msg, num) {
 
 $(function() {
     // on page load, put the chars on the page and set the game state to choosePlayerChar
-    createCharSelect(characters);
+    for (var i = 0; i < characters.length; i++) {
+        Object.freeze(characters[i]);
+    };
+    Object.freeze(characters);
+    createCharSelect();
     messageWriter("Choose your character: ", 1);
     console.log("Current game state is: " + currentGameState);
 
     $(document).on("click", ".charImg", function() {
+        for (var i = 2; i < 8; i++) {
+            messageWriter("", i);
+        };
         if (currentGameState === gameState[0]) {
-            waitingEnemies = characters;
+            // Object.assign(waitingEnemies, characters);
+            waitingEnemies = JSON.parse(JSON.stringify(characters));
             playerChar = waitingEnemies.splice(this.id,1);
             console.log("You chose: " + playerChar[0].name);
             console.log("You did not choose the sad fools in this array:");
@@ -149,21 +157,25 @@ $(function() {
 
         else if (currentGameState === gameState[2]) {
             activeEnemy[0].hp -= playerChar[0].attack;
+            // console.log(activeEnemy[0].hp);
             playerChar[0].hp -= activeEnemy[0].counter;
             playerChar[0].attack += playerChar[0].originalAttack;
             messageWriter("HP: " + playerChar[0].hp, 2);
             messageWriter("POWER LEVEL: " + playerChar[0].attack, 3);
             htmlWriter("HP: " + activeEnemy[0].hp + "<br>POWER LEVEL: " + activeEnemy[0].counter, 6);
             
-            if (waitingEnemies.length === 0) {
-                messageWriter("You win!", 1);
-                messageWriter("You win!", 2);
-                messageWriter("You win!", 3);
-                messageWriter("You win!", 4);
-                messageWriter("You win!", 5);
-                messageWriter("You win!", 6);
-                messageWriter("You win!", 7);
+            if (waitingEnemies.length === 0 && activeEnemy[0].hp < 1) {
+                for (var i = 1; i < 8; i++) {
+                    messageWriter("You win!", i);
+                };
+                playerChar = {};
+                activeEnemy = {};
+                waitingEnemies = [];
                 $("#enemyArea").empty();
+                createCharSelect();
+                messageWriter("Choose your character: ", 1);
+                $("#youArea").empty()
+                setGameState(gameState[0]);
             }
 
             else if (activeEnemy[0].hp < 1) {
@@ -175,13 +187,16 @@ $(function() {
             }
 
             else if (playerChar[0].hp < 1) {
-                messageWriter("Game over!", 1);
-                messageWriter("Game over!", 2);
-                messageWriter("Game over!", 3);
-                messageWriter("Game over!", 4);
-                messageWriter("Game over!", 5);
-                messageWriter("Game over!", 6);
-                messageWriter("Game over!", 7);
+                for (var i = 1; i < 8; i++) {
+                    messageWriter("Game over!", i);
+                };
+                $("#youArea").empty();
+                playerChar = {};
+                activeEnemy = {};
+                waitingEnemies = [];
+                createCharSelect();
+                messageWriter("Choose your character: ", 1);
+                setGameState(gameState[0]);
             }
             
         }
