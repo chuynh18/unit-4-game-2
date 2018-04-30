@@ -13,11 +13,11 @@ html {
 }
 
 /* temp borders to help me as I build the game out */
-div {
+/* div {
     border-style: solid;
     border-width: 2px;
     border-color: white;
-}
+} */
 
 .charContainer {
     display: inline-block;

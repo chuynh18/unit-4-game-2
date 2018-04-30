@@ -113,11 +113,9 @@ $(function() {
     console.log("Current game state is: " + currentGameState);
 
     $(document).on("click", ".charImg", function() {
-        for (var i = 2; i < 8; i++) {
-            messageWriter("", i);
-        };
+
         if (currentGameState === gameState[0]) {
-            // Object.assign(waitingEnemies, characters);
+            // seriously, javascript?  thanks for nothing
             waitingEnemies = JSON.parse(JSON.stringify(characters));
             playerChar = waitingEnemies.splice(this.id,1);
             console.log("You chose: " + playerChar[0].name);
