@@ -14,10 +14,10 @@ I have done yet, but I just pounded this out in a few working hours on a Sunday.
 // ----------------------- variables and such -----------------------
 
 const characters = [
-    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", title: "<img src=assets/images/ratiotext.png>", hp: 200, attack: 10, originalAttack: 10, counter: 6},
-    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", title: "<img src=assets/images/spacegeneraltext.png>", hp: 250, attack: 8, originalAttack: 8, counter: 7},
-    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", title: "<img src=assets/images/thetext.png>", hp: 150, attack: 12, originalAttack:12, counter: 11},
-    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", title: "<img src=assets/images/speakertext.png>", hp: 225, attack: 13, originalAttack: 13, counter: 5}
+    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", title: "<img src=assets/images/ratiotext.png>", hp: 180, attack: 3, originalAttack: 3, counter: 9},
+    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", title: "<img src=assets/images/spacegeneraltext.png>", hp: 200, attack: 2, originalAttack: 2, counter: 7},
+    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", title: "<img src=assets/images/thetext.png>", hp: 150, attack: 4, originalAttack:4, counter: 8},
+    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", title: "<img src=assets/images/speakertext.png>", hp: 115, attack: 5, originalAttack: 5, counter: 13}
 ];
 var playerChar = {};
 var activeEnemy = {};
@@ -191,25 +191,26 @@ $(function() {
                 setGameState(gameState[0]);
             }
 
-            else if (activeEnemy[0].hp < 1) {
-                messageWriter("Enemy defeated!", 6);
-                messageWriter("Choose your next opponent!", 1);
-                messageWriter("DEAD LOL", 7);
-                $("#enemyArea").empty();
-                currentGameState = gameState[1];
-            }
-
             else if (playerChar[0].hp < 1) {
                 for (var i = 1; i < 8; i++) {
                     messageWriter("Game over!", i);
                 };
                 $("#youArea").empty();
+                $("#enemyArea").empty();
                 playerChar = {};
                 activeEnemy = {};
                 waitingEnemies = [];
                 createCharSelect();
                 messageWriter("Choose your character: ", 1);
                 setGameState(gameState[0]);
+            }
+
+            else if (activeEnemy[0].hp < 1) {
+                messageWriter("Enemy defeated!", 6);
+                messageWriter("Choose your next opponent!", 1);
+                messageWriter("DEAD LOL", 7);
+                $("#enemyArea").empty();
+                currentGameState = gameState[1];
             }
             
         }
