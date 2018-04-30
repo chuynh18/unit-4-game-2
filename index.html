@@ -12,13 +12,20 @@
 
         <body>
             <header><img src="assets/images/backstroke.png" alt="backstroke of the west" /></header>
-            <div id="charSelect">
-                <p id="chooseChar">Choose your character:</p>
-                <!-- chars will be created here by game.js function createChars() -->
+            <div id="topContainer">
+                <div id="youArea"></div>
+                <div id="messageAndCharSelect">
+                    <p id="messageArea1"><!-- messages are written here by game.js function messageWriter() --></p>
+                    <p id="messageArea2"><!-- messages are written here by game.js function messageWriter() --></p>
+                    <p id="messageArea3"><!-- messages are written here by game.js function messageWriter() --></p>
+                    <!-- chars will be created here by game.js function createChars() -->
+                    <div id="charSelect"></div>
+                </div>
             </div>
-            <div id="nonPlayerCharContainer">
-                <div id="battleArea"></div>
-                <div id="waitingRoom"></div>
+            <div id="bottomContainer">
+                <div id="enemyArea"></div>
+                <div id="enemyStats"></div>
+                <div id="waitingRoom"><p id="messageArea4"></p></div>
             </div>
             <script src="assets/javascript/game.js"></script>
         </body>

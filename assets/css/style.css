@@ -9,12 +9,13 @@ html {
     font-family: 'Russo One', sans-serif;
     color: #ffe81f;
     text-align: center;
+    font-size: 24px;
 }
 
 /* temp borders to help me as I build the game out */
 div {
     border-style: solid;
-    border-width: 3px;
+    border-width: 2px;
     border-color: white;
 }
 
@@ -26,6 +27,8 @@ div {
     border-style: solid;
     border-width: 2px;
     border-radius: 5%;
+    height: 250px;
+    width: 250px;
 }
 
 .lightSide {
@@ -62,18 +65,28 @@ div {
     left: 1px;
 }
 
-#nonPlayerCharContainer {
+#topContainer, #bottomContainer {
     height: 400px;
 }
 
-#battleArea {
+#youArea, #enemyArea, #enemyStats {
     height: 100%;
-    width: 33%;
+    width: 20%;
+    float: left;
+}
+
+#enemyStats {
+    width: 23%;
+}
+
+#charSelect {
+    height: 100%;
+    width: 79%;
     float: left;
 }
 
 #waitingRoom {
     height: 100%;
-    width: 66%;
+    width: 55%;
     float:right;
 }
