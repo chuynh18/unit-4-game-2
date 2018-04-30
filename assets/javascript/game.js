@@ -3,10 +3,10 @@
 // ----------------------- variables and such -----------------------
 
 const characters = [
-    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", hp: 200, attack: 10, counter: 6},
-    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", hp: 250, attack: 8, counter: 7},
-    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", hp: 150, attack: 12, counter: 11},
-    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", hp: 225, attack: 13, counter: 5}
+    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", hp: 200, attack: 10, originalAttack: 10, counter: 6},
+    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", hp: 250, attack: 8, originalAttack: 8, counter: 7},
+    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", hp: 150, attack: 12, originalAttack:12, counter: 11},
+    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", hp: 225, attack: 13, originalAttack: 13, counter: 5}
 ];
 var playerChar = {};
 var activeEnemy = {};
@@ -42,7 +42,7 @@ var createPlayerChar = function() {
         charImg.attr("src", playerChar[i].src);
         charImg.addClass(playerChar[i].class);
         charImg.attr("alt", playerChar[i].name);
-        charImg.attr("id", i);
+        charImg.attr("id", 420);
         $("#youArea").append(charContainer); // this line and the line below... I would need to make jQuery accept an argument from my function
         $("#youArea > #char"+(i+1)).append(charImg);
     }
@@ -125,21 +125,65 @@ $(function() {
         }
 
         else if (currentGameState === gameState[1]) {
-            activeEnemy = waitingEnemies.splice(this.id,1);
-            console.log("You chose " + activeEnemy[0].name + " as your enemy.");
-            console.log("You did not choose the sad fools in this array:");
-            console.log(waitingEnemies);
-            createWaitingEnemies();
-            createActiveEnemy();
-            messageWriter("Your enemy", 7);
-            messageWriter("These fine gentlemen are waiting their turn to fight you!", 4);
-            messageWriter("HP: " + playerChar[0].hp, 2);
-            messageWriter("POWER LEVEL: " + playerChar[0].attack, 3);
-            setGameState(gameState[2]);
+            console.log(this.id);
+            if (this.id > 10) {
+                messageWriter("No, silly!  Click on an ENEMY, not yourself!", 1);
+                messageWriter("Click on an enemy to fight them!", 4);
+            }
+            else if (this.id < 10) {
+                activeEnemy = waitingEnemies.splice(this.id,1);
+                console.log("You chose " + activeEnemy[0].name + " as your enemy.");
+                console.log("You did not choose the sad fools in this array:");
+                console.log(waitingEnemies);
+                createWaitingEnemies();
+                createActiveEnemy();
+                messageWriter("Your enemy", 7);
+                messageWriter("These fine gentlemen are waiting their turn to fight you!", 4);
+                messageWriter("HP: " + playerChar[0].hp, 2);
+                messageWriter("POWER LEVEL: " + playerChar[0].attack, 3);
+                messageWriter("Click any portrait to fight!", 1);
+                htmlWriter("HP: " + activeEnemy[0].hp + "<br>POWER LEVEL: " + activeEnemy[0].counter, 6);
+                setGameState(gameState[2]);
+            }
         }
 
         else if (currentGameState === gameState[2]) {
+            activeEnemy[0].hp -= playerChar[0].attack;
+            playerChar[0].hp -= activeEnemy[0].counter;
+            playerChar[0].attack += playerChar[0].originalAttack;
+            messageWriter("HP: " + playerChar[0].hp, 2);
+            messageWriter("POWER LEVEL: " + playerChar[0].attack, 3);
+            htmlWriter("HP: " + activeEnemy[0].hp + "<br>POWER LEVEL: " + activeEnemy[0].counter, 6);
+            
+            if (waitingEnemies.length === 0) {
+                messageWriter("You win!", 1);
+                messageWriter("You win!", 2);
+                messageWriter("You win!", 3);
+                messageWriter("You win!", 4);
+                messageWriter("You win!", 5);
+                messageWriter("You win!", 6);
+                messageWriter("You win!", 7);
+                $("#enemyArea").empty();
+            }
 
+            else if (activeEnemy[0].hp < 1) {
+                messageWriter("Enemy defeated!", 6);
+                messageWriter("Choose your next opponent!", 1);
+                messageWriter("DEAD LOL", 7);
+                $("#enemyArea").empty();
+                currentGameState = gameState[1];
+            }
+
+            else if (playerChar[0].hp < 1) {
+                messageWriter("Game over!", 1);
+                messageWriter("Game over!", 2);
+                messageWriter("Game over!", 3);
+                messageWriter("Game over!", 4);
+                messageWriter("Game over!", 5);
+                messageWriter("Game over!", 6);
+                messageWriter("Game over!", 7);
+            }
+            
         }
 
     })
