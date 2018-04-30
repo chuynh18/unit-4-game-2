@@ -133,7 +133,6 @@ $(function() {
             // seriously, javascript?  thanks for nothing
             waitingEnemies = JSON.parse(JSON.stringify(characters));
             playerChar = waitingEnemies.splice(this.id,1);
-            audioElement.setAttribute("src", playerChar[0].sound);
             console.log("You chose: " + playerChar[0].name);
             console.log("You did not choose the sad fools in this array:");
             console.log(waitingEnemies);
@@ -218,6 +217,7 @@ $(function() {
                 messageWriter("Choose your next opponent!", 1);
                 messageWriter("DEAD LOL", 7);
                 $("#enemyArea").empty();
+                audioElement.setAttribute("src", playerChar[0].sound);
                 audioElement.play();
                 currentGameState = gameState[1];
             }
