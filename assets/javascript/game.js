@@ -14,10 +14,10 @@ I have done yet, but I just pounded this out in a few working hours on a Sunday.
 // ----------------------- variables and such -----------------------
 
 const characters = [
-    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", title: "<img src=assets/images/ratiotext.png>", hp: 180, attack: 3, originalAttack: 3, counter: 9},
-    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", title: "<img src=assets/images/spacegeneraltext.png>", hp: 200, attack: 2, originalAttack: 2, counter: 7},
-    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", title: "<img src=assets/images/thetext.png>", hp: 150, attack: 4, originalAttack:4, counter: 8},
-    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", title: "<img src=assets/images/speakertext.png>", hp: 115, attack: 5, originalAttack: 5, counter: 13}
+    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", title: "<img src='assets/images/ratiotext.png'>", sound: "assets/sounds/ratio.webm", hp: 180, attack: 3, originalAttack: 3, counter: 9},
+    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", title: "<img src='assets/images/spacegeneraltext.png'>", sound: "assets/sounds/spacegeneral.webm", hp: 200, attack: 2, originalAttack: 2, counter: 7},
+    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", title: "<img src='assets/images/thetext.png'>", sound: "assets/sounds/the.webm", hp: 150, attack: 4, originalAttack:4, counter: 8},
+    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", title: "<img src='assets/images/speakertext.png'>", sound: "assets/sounds/speaker.webm", hp: 115, attack: 5, originalAttack: 5, counter: 13}
 ];
 var playerChar = {};
 var activeEnemy = {};
@@ -25,6 +25,7 @@ var waitingEnemies = [];
 
 const gameState = ["choosePlayerChar", "chooseEnemyChar", "battle"];
 var currentGameState = gameState[0];
+var audioElement = document.createElement("audio");
 
 // ----------------------- functions -----------------------
 
@@ -114,7 +115,10 @@ var htmlWriter = function(msg, num) {
 // ----------------------- game code -----------------------
 
 $(function() {
-    // on page load, put the chars on the page and set the game state to choosePlayerChar
+    // on page load, put the chars on the page and set the game state to "choosePlayerChar"
+
+    // this is what I used to figure out why the heck the game was not resetting successfully
+    // who designed this default behavior for const and arrays/objects?!?!?!
     for (var i = 0; i < characters.length; i++) {
         Object.freeze(characters[i]);
     };
@@ -129,6 +133,7 @@ $(function() {
             // seriously, javascript?  thanks for nothing
             waitingEnemies = JSON.parse(JSON.stringify(characters));
             playerChar = waitingEnemies.splice(this.id,1);
+            audioElement.setAttribute("src", playerChar[0].sound);
             console.log("You chose: " + playerChar[0].name);
             console.log("You did not choose the sad fools in this array:");
             console.log(waitingEnemies);
@@ -188,6 +193,7 @@ $(function() {
                 createCharSelect();
                 messageWriter("Choose your character: ", 1);
                 $("#youArea").empty()
+                audioElement.play();
                 setGameState(gameState[0]);
             }
 
@@ -197,6 +203,8 @@ $(function() {
                 };
                 $("#youArea").empty();
                 $("#enemyArea").empty();
+                audioElement.setAttribute("src", activeEnemy[0].sound);
+                audioElement.play();
                 playerChar = {};
                 activeEnemy = {};
                 waitingEnemies = [];
@@ -210,6 +218,7 @@ $(function() {
                 messageWriter("Choose your next opponent!", 1);
                 messageWriter("DEAD LOL", 7);
                 $("#enemyArea").empty();
+                audioElement.play();
                 currentGameState = gameState[1];
             }
             
