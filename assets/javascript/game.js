@@ -3,10 +3,10 @@
 // ----------------------- variables and such -----------------------
 
 const characters = [
-    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", hp: 200, attack: 10, originalAttack: 10, counter: 6},
-    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", hp: 250, attack: 8, originalAttack: 8, counter: 7},
-    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", hp: 150, attack: 12, originalAttack:12, counter: 11},
-    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", hp: 225, attack: 13, originalAttack: 13, counter: 5}
+    {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", title: "<img src=assets/images/ratiotext.png>", hp: 200, attack: 10, originalAttack: 10, counter: 6},
+    {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", title: "<img src=assets/images/spacegeneraltext.png>", hp: 250, attack: 8, originalAttack: 8, counter: 7},
+    {name: "The", src: "assets/images/the.jpg", class: "charImg darkSide", title: "<img src=assets/images/thetext.png>", hp: 150, attack: 12, originalAttack:12, counter: 11},
+    {name: "Speaker D", src: "assets/images/speaker.jpg", class: "charImg darkSide", title: "<img src=assets/images/speakertext.png>", hp: 225, attack: 13, originalAttack: 13, counter: 5}
 ];
 var playerChar = {};
 var activeEnemy = {};
@@ -119,7 +119,7 @@ $(function() {
             createWaitingEnemies();
             $("#charSelect").empty();
             messageWriter("", 1);
-            messageWriter("You", 5);
+            htmlWriter(playerChar[0].title, 5);
             messageWriter("Choose your opponent...", 4);
             setGameState(gameState[1]);
         }
@@ -137,7 +137,7 @@ $(function() {
                 console.log(waitingEnemies);
                 createWaitingEnemies();
                 createActiveEnemy();
-                messageWriter("Your enemy", 7);
+                htmlWriter(activeEnemy[0].title, 7);
                 messageWriter("These fine gentlemen are waiting their turn to fight you!", 4);
                 messageWriter("HP: " + playerChar[0].hp, 2);
                 messageWriter("POWER LEVEL: " + playerChar[0].attack, 3);
