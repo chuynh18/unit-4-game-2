@@ -65,28 +65,47 @@ div {
     left: 1px;
 }
 
-#topContainer, #bottomContainer {
-    height: 400px;
+#youAndMessage {
+    text-align: left;
 }
 
-#youArea, #enemyArea, #enemyStats {
+#youArea, #enemyContainer, #enemyStats {
     height: 100%;
     width: 20%;
     float: left;
+}
+
+#messageArea1 {
+    text-align: center;
+}
+
+#messageArea5 {
+    width: 20%;
+    text-align: center;
+}
+
+#youArea {
+    text-align: center;
 }
 
 #enemyStats {
     width: 23%;
 }
 
-#charSelect {
+#messageAndCharSelect {
     height: 100%;
     width: 79%;
     float: left;
 }
 
-#waitingRoom {
+#waitingAndMessage {
     height: 100%;
     width: 55%;
     float:right;
+}
+
+#topContainer, #bottomContainer {
+    height: 400px;
+    clear: both;
+    border-color: purple;
 }

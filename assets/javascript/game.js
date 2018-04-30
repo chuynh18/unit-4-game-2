@@ -49,6 +49,7 @@ var createPlayerChar = function() {
 };
 
 var createWaitingEnemies = function() {
+    $("#waitingRoom").empty();
     for (var i = 0; i < waitingEnemies.length; i++) {
         var charContainer = $("<div>");
         var charImg = $("<img>");
@@ -63,14 +64,40 @@ var createWaitingEnemies = function() {
     }
 };
 
+var createActiveEnemy = function() {
+    $("#enemyArea").empty();
+    for (var i = 0; i < activeEnemy.length; i++) {
+        var charContainer = $("<div>");
+        var charImg = $("<img>");
+        charContainer.addClass("charContainer");
+        charContainer.attr("id", "char"+(i+1));
+        charImg.attr("src", activeEnemy[i].src);
+        charImg.addClass(activeEnemy[i].class);
+        charImg.attr("alt", activeEnemy[i].name);
+        charImg.attr("id", i);
+        $("#enemyArea").append(charContainer);
+        $("#enemyArea > #char"+(i+1)).append(charImg);
+    }
+};
+
 var setGameState = function(gameStateIndex) {
     console.log("Game state transition from " + currentGameState + " to " + gameStateIndex);
     currentGameState = gameStateIndex;
 };
 
-// msg is a string (so use quotes!), num is 1, 2, or 3 depending on where you want the message to appear.  1 top, 3 bottom
+// msg is a string (so use quotes!), num is 1 through 6
+// 1, 2, 3 are 3 lines in the original character select box
+// 4 is in the opponent box
+// 5 is in your character's box
+// 6 is in the enemyStats box
+// 7 is the enemy's name
 var messageWriter = function(msg, num) {
     $("#messageArea"+num).text(msg);
+};
+
+// just in case I need HTML
+var htmlWriter = function(msg, num) {
+    $("#messageArea"+num).html(msg);
 };
 
 // ----------------------- game code -----------------------
@@ -81,18 +108,38 @@ $(function() {
     messageWriter("Choose your character: ", 1);
     console.log("Current game state is: " + currentGameState);
 
-    $(".charImg").on("click", function() {
+    $(document).on("click", ".charImg", function() {
         if (currentGameState === gameState[0]) {
             waitingEnemies = characters;
             playerChar = waitingEnemies.splice(this.id,1);
             console.log("You chose: " + playerChar[0].name);
+            console.log("You did not choose the sad fools in this array:");
             console.log(waitingEnemies);
             createPlayerChar();
             createWaitingEnemies();
             $("#charSelect").empty();
             messageWriter("", 1);
+            messageWriter("You", 5);
             messageWriter("Choose your opponent...", 4);
             setGameState(gameState[1]);
+        }
+
+        else if (currentGameState === gameState[1]) {
+            activeEnemy = waitingEnemies.splice(this.id,1);
+            console.log("You chose " + activeEnemy[0].name + " as your enemy.");
+            console.log("You did not choose the sad fools in this array:");
+            console.log(waitingEnemies);
+            createWaitingEnemies();
+            createActiveEnemy();
+            messageWriter("Your enemy", 7);
+            messageWriter("These fine gentlemen are waiting their turn to fight you!", 4);
+            messageWriter("HP: " + playerChar[0].hp, 2);
+            messageWriter("POWER LEVEL: " + playerChar[0].attack, 3);
+            setGameState(gameState[2]);
+        }
+
+        else if (currentGameState === gameState[2]) {
+
         }
 
     })
