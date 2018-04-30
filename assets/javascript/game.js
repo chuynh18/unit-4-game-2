@@ -1,5 +1,16 @@
 "use strict";
 
+/*
+
+Is this game ugly as sin?  Yes.  I didn't really spend any time or effort making it look pretty.
+I just wanted to practice a little more jQuery and also learn some more logic.
+I think this is the first thing I wrote from scratch where I had to keep track of state.
+So that's pretty cool.  I also use arrays, objects, and arrays of objects.
+Thinking through this HW was pretty fun.  The implementation is probably the messiest thing
+I have done yet, but I just pounded this out in a few working hours on a Sunday.  So meh.
+
+*/
+
 // ----------------------- variables and such -----------------------
 
 const characters = [
@@ -125,6 +136,10 @@ $(function() {
             createWaitingEnemies();
             $("#charSelect").empty();
             messageWriter("", 1);
+            messageWriter("", 2);
+            messageWriter("", 3);
+            messageWriter("", 6);
+            messageWriter("", 7);
             htmlWriter(playerChar[0].title, 5);
             messageWriter("Choose your opponent...", 4);
             setGameState(gameState[1]);
