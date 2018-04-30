@@ -61,3 +61,19 @@ div {
     top: 1px;
     left: 1px;
 }
+
+#nonPlayerCharContainer {
+    height: 400px;
+}
+
+#battleArea {
+    height: 100%;
+    width: 33%;
+    float: left;
+}
+
+#waitingRoom {
+    height: 100%;
+    width: 66%;
+    float:right;
+}
