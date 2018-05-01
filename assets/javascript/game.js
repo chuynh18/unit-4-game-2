@@ -13,6 +13,7 @@ I have done yet, but I just pounded this out in a few working hours on a Sunday.
 
 // ----------------------- variables and such -----------------------
 
+// I used const because I thought I was being clever.  Not clever enough, apparently.
 const characters = [
     {name: "Ratio Tile", src: "assets/images/ratio.jpg", class: "charImg lightSide", title: "<img src='assets/images/ratiotext.png'>", sound: "assets/sounds/ratio.webm", hp: 180, attack: 3, originalAttack: 3, counter: 9},
     {name: "Space General", src: "assets/images/spacegeneral.jpg", class: "charImg darkSide", title: "<img src='assets/images/spacegeneraltext.png'>", sound: "assets/sounds/spacegeneral.webm", hp: 200, attack: 2, originalAttack: 2, counter: 7},
@@ -25,6 +26,8 @@ var waitingEnemies = [];
 
 const gameState = ["choosePlayerChar", "chooseEnemyChar", "battle"];
 var currentGameState = gameState[0];
+
+var saberSounds = ["assets/sounds/saber1.webm", "assets/sounds/saber2.webm", "assets/sounds/saber3.webm", "assets/sounds/saber4.webm", "assets/sounds/saber5.webm"];
 var audioElement = document.createElement("audio");
 
 // ----------------------- functions -----------------------
@@ -103,6 +106,7 @@ var setGameState = function(gameStateIndex) {
 // 5 is in your character's box
 // 6 is in the enemyStats box
 // 7 is the enemy's name
+// this was an abomination and I have many regrets
 var messageWriter = function(msg, num) {
     $("#messageArea"+num).text(msg);
 };
@@ -180,11 +184,15 @@ $(function() {
             messageWriter("HP: " + playerChar[0].hp, 2);
             messageWriter("POWER LEVEL: " + playerChar[0].attack, 3);
             htmlWriter("HP: " + activeEnemy[0].hp + "<br>POWER LEVEL: " + activeEnemy[0].counter, 6);
+            audioElement.setAttribute("src", saberSounds[Math.floor(Math.random()*saberSounds.length)]);
+            audioElement.play();
             
             if (waitingEnemies.length === 0 && activeEnemy[0].hp < 1) {
                 for (var i = 1; i < 8; i++) {
-                    messageWriter("You win!", i);
+                    messageWriter("You win!", i); // this is a horrible idea.  too bad, everyone knows you can't change code after it's written, so it stays
                 };
+                audioElement.setAttribute("src", playerChar[0].sound);
+                audioElement.play();
                 playerChar = {};
                 activeEnemy = {};
                 waitingEnemies = [];
@@ -192,7 +200,6 @@ $(function() {
                 createCharSelect();
                 messageWriter("Choose your character: ", 1);
                 $("#youArea").empty()
-                audioElement.play();
                 setGameState(gameState[0]);
             }
 
